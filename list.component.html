@@ -1,0 +1,52 @@
+<div class="list-page">
+  <dx-data-grid
+    [dataSource]="dataSource"
+    keyExpr="id"
+    [showBorders]="true"
+    [rowAlternationEnabled]="true"
+    [columnAutoWidth]="true"
+    (onRowClick)="onRowClick($event)"
+  >
+    <dxo-toolbar>
+      <dxi-item location="before">
+        <div class="grid-title">Address Book</div>
+      </dxi-item>
+      <dxi-item
+        location="after"
+        widget="dxButton"
+        locateInMenu="never"
+        [options]="{ icon: 'plus', text: 'Add', type: 'default', onClick: onAddClick }"
+      ></dxi-item>
+    </dxo-toolbar>
+
+    <dxi-column dataField="name" caption="Name"></dxi-column>
+    <dxi-column dataField="email" caption="Email"></dxi-column>
+    <dxi-column dataField="phone" caption="Phone"></dxi-column>
+    <dxi-column
+      caption="Address"
+      [calculateCellValue]="calculateAddress"
+    ></dxi-column>
+    <dxi-column type="buttons" caption="Actions" [width]="90">
+      <dxi-button hint="Delete" icon="trash" [onClick]="onDeleteClick"></dxi-button>
+    </dxi-column>
+  </dx-data-grid>
+
+  <dx-popup
+    [(visible)]="popupVisible"
+    [title]="selectedContact ? 'Contact Details' : 'New Contact'"
+    [width]="460"
+    height="auto"
+    [showCloseButton]="true"
+    [dragEnabled]="false"
+    [hideOnOutsideClick]="false"
+    (onHiding)="onPopupHiding()"
+  >
+    <app-modal
+      [contact]="selectedContact"
+      [stateList]="stateList"
+      (create)="onCreate($event)"
+      (update)="onUpdate($event)"
+      (cancel)="onCancel()"
+    ></app-modal>
+  </dx-popup>
+</div>
