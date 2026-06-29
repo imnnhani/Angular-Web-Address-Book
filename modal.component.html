@@ -1,0 +1,93 @@
+<form [formGroup]="form" class="contact-form">
+  <div class="field">
+    <label>Name <span class="required">*</span></label>
+    <dx-text-box formControlName="name" placeholder="Hani Irwan"></dx-text-box>
+    <div
+      class="error"
+      *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')"
+    >
+      Name is required.
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Email</label>
+    <dx-text-box formControlName="email" placeholder="hani@example.com"></dx-text-box>
+    <div
+      class="error"
+      *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')"
+    >
+      Enter a valid email address.
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Phone</label>
+    <dx-text-box formControlName="phone" placeholder="012-345 6789"></dx-text-box>
+    <div
+      class="error"
+      *ngIf="form.get('phone')?.touched && form.get('phone')?.hasError('pattern')"
+    >
+      Phone cannot contain letters.
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Street</label>
+    <dx-text-box formControlName="street" placeholder="12 Jalan BRP"></dx-text-box>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <label>State</label>
+      <dx-select-box
+        formControlName="state"
+        [items]="stateList"
+        placeholder="Select state"
+      ></dx-select-box>
+    </div>
+
+    <div class="field">
+      <label>Postcode</label>
+      <dx-text-box formControlName="postcode" placeholder="47000"></dx-text-box>
+      <div
+        class="error"
+        *ngIf="form.get('postcode')?.touched && form.get('postcode')?.hasError('pattern')"
+      >
+        Postcode must be numbers only.
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Description</label>
+    <dx-text-box formControlName="description" placeholder="Notes (optional)"></dx-text-box>
+  </div>
+
+  <div class="actions">
+    <dx-button
+      *ngIf="isNew"
+      text="Create"
+      type="default"
+      [disabled]="form.invalid"
+      (onClick)="onCreateClick()"
+    ></dx-button>
+
+    <dx-button
+      *ngIf="!isNew && !isEditing"
+      text="Edit"
+      type="default"
+      (onClick)="onEditClick()"
+    ></dx-button>
+
+    <dx-button
+      *ngIf="!isNew && isEditing"
+      text="Save"
+      type="default"
+      [disabled]="form.invalid"
+      (onClick)="onSaveClick()"
+    ></dx-button>
+
+    <dx-button text="Cancel" type="normal" (onClick)="onCancelClick()"></dx-button>
+  </div>
+</form>
